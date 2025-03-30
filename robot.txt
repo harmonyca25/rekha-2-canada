@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /form2.html
+Disallow: /admin/
+Sitemap: https://anandvip.github.io/rekha-2-canada/sitemap.xml
