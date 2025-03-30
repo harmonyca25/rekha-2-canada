@@ -43,6 +43,8 @@
             border-radius: 4px;
             font-weight: 600;
             transition: background-color 0.3s, transform 0.2s;
+            cursor: pointer;
+            border: none;
         }
         
         .btn:hover {
@@ -296,25 +298,6 @@
             font-size: 20px;
         }
         
-        .contact-form label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        
-        .contact-form textarea {
-            height: 150px;
-        }
-        
         /* Footer */
         footer {
             background-color: var(--dark-color);
@@ -389,6 +372,81 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            position: relative;
+            background-color: white;
+            margin: auto;
+            padding: 0;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: modalIn 0.5s;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            z-index: 1200;
+            cursor: pointer;
+        }
+        
+        .modal-close:hover {
+            color: #333;
+        }
+        
+        .modal-iframe-container {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            padding-bottom: 56.25%; /* Adjust for form aspect ratio */
+            height: 0;
+        }
+        
+        .modal-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        @keyframes modalIn {
+            from {transform: translateY(-50px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+        
         /* Responsive Styles */
         @media (max-width: 768px) {
             .header-container {
@@ -415,6 +473,11 @@
             
             section {
                 padding: 60px 0;
+            }
+            
+            .modal-content {
+                width: 95%;
+                max-height: 95vh;
             }
         }
     </style>
@@ -443,7 +506,7 @@
         <div class="container">
             <h1>Secure Your Future with Confidence</h1>
             <p>Personalized insurance solutions tailored to protect what matters most to you and your family</p>
-            <a href="#contact" class="btn">Get Free Consultation</a>
+            <button class="btn" onclick="openContactModal()">Get Free Consultation</button>
         </div>
     </section>
 
@@ -453,13 +516,12 @@
             <div class="about-content">
                 <div class="about-text">
                     <h2>About Rekha</h2>
-                    <p>Hello, I'm Rekha, a licensed insurance agent in Ontario with a passion for helping individuals and families secure their future. With a personalized approach and commitment to understanding each client's unique needs, I strive to provide the best insurance solutions that offer both protection and peace of mind.</p>
+                    <p>Hello, I'm Rekha, a FSRA licensed insurance agent in Ontario with a passion for helping individuals and families secure their future. With a personalized approach and commitment to understanding each client's unique needs, I strive to provide the best insurance solutions that offer both protection and peace of mind.</p>
                     <p>I entered the insurance industry in 2023 with a strong belief that everyone deserves access to quality insurance coverage that truly protects what matters most. My approach is built on three core principles: honesty, personalization, and ongoing support.</p>
                     <p>I take pride in explaining complex insurance terms in simple language, ensuring you understand exactly what you're signing up for. My goal is not just to sell policies but to build long-term relationships based on trust and exceptional service.</p>
-                    <a href="#contact" class="btn">Get in Touch</a>
+                    <button class="btn" onclick="openContactModal()">Get in Touch</button>
                 </div>
                 <div class="about-image">
-                    <!-- Note: Replace the placeholder with the correct image URL once image is available -->
                     <img src="https://raw.githubusercontent.com/anandvip/rekha-blogs/refs/heads/main/img/rekhasagwal-profileimage.jpg" alt="Insurance Agent Rekha">
                     <p style="text-align: center; margin-top: 10px; font-style: italic; font-size: 14px;">Rekha, FSRA Licensed Insurance Agent</p>
                 </div>
@@ -615,7 +677,7 @@
         <div class="container">
             <h2>Ready to Secure Your Future?</h2>
             <p>Contact me today for a free consultation and personalized insurance quote</p>
-            <a href="#contact" class="btn">Get Started Now</a>
+            <button class="btn" onclick="openContactModal()">Get Started Now</button>
         </div>
     </section>
 
@@ -661,29 +723,9 @@
                 </div>
                 
                 <div class="contact-form">
-                    <form>
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" required>
-                        
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
-                        
-                        <label for="phone">Phone Number (Optional)</label>
-                        <input type="tel" id="phone" name="phone">
-                        
-                        <label for="insurance-type">Insurance Interest</label>
-                        <input type="text" id="insurance-type" name="insurance-type" placeholder="e.g., Life, Health, Auto">
-                        
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" placeholder="Tell me about your insurance needs"></textarea>
-                        
-                        <div class="consent-checkbox" style="margin-bottom: 20px;">
-                            <input type="checkbox" id="consent" name="consent" required>
-                            <label for="consent" style="display: inline; margin-left: 10px;">I consent to the collection and use of my personal information as described in the <a href="https://anandvip.github.io/rekha-2-canada/privacy-policy.html" target="_blank">Privacy Policy</a>.</label>
-                        </div>
-                        
-                        <button type="submit" class="btn">Send Message</button>
-                    </form>
+                    <h3>Send a Message</h3>
+                    <p>Fill out the form below or use the contact information to get in touch.</p>
+                    <button class="btn" style="width: 100%;" onclick="openContactModal()">Open Contact Form</button>
                     
                     <div style="margin-top: 20px; font-size: 14px; color: #666;">
                         <p><strong>PIPEDA Compliance Notice:</strong> The personal information you provide will only be used to respond to your inquiry and will not be shared with third parties without your explicit consent. You have the right to access, correct, and request deletion of your personal information at any time.</p>
@@ -765,8 +807,19 @@
         </div>
     </footer>
 
-    <!-- Simple JavaScript for smooth scrolling -->
+    <!-- Modal for Contact Form -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeContactModal()">&times;</span>
+            <div class="modal-iframe-container">
+                <iframe src="https://anandvip.github.io/rekha-2-canada/form2.html" class="modal-iframe" title="Contact Form"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
     <script>
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -775,6 +828,45 @@
                     behavior: 'smooth'
                 });
             });
+        });
+        
+        // Modal functionality
+        const modal = document.getElementById('contactModal');
+        
+        function openContactModal() {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+        
+        function closeContactModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // Allow scrolling again
+        }
+        
+        // Close the modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeContactModal();
+            }
+        }
+        
+        // Listen for messages from the iframe
+        window.addEventListener('message', function(event) {
+            // Make sure the message is from our form page
+            if (event.origin === 'https://anandvip.github.io') {
+                const data = event.data;
+                
+                // If the message indicates form submission success
+                if (data.type === 'formSubmitted') {
+                    // You can add additional actions here when the form is submitted
+                    console.log('Form submitted successfully');
+                }
+                
+                // If the message indicates to close the modal
+                if (data.type === 'closeModal') {
+                    closeContactModal();
+                }
+            }
         });
     </script>
 </body>
